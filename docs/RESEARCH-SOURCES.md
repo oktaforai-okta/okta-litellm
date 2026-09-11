@@ -19,6 +19,7 @@ Reviewed on 2026-09-11.
 - [Okta Authorization Servers API](https://developer.okta.com/docs/api/openapi/okta-management/management/tags/authorizationserver)
 - [Okta System Log API](https://developer.okta.com/docs/api/openapi/okta-management/management/tags/systemlog)
 - [Okta Help: Secure AI](https://help.okta.com/oie/en-us/content/topics/ai-agents/ai-agents-home.htm)
+- [Okta blog: Securing AI Agents Beyond the Gateway](https://www.okta.com/blog/ai/securing-ai-agents-identity-architecture/)
 - O4AA technical reference: token flows, agent identity/registry, connections and credentials, A2A, management API, product capabilities, and agentic-enterprise blueprint
 - MCP Bridge technical reference: setup/access, admin API, 0.16 runtime authorization and tools, release/patch notes, and troubleshooting
 - Local Postman collection matrix supplied for planning (read-only; collections and environments are not reproduced)
@@ -36,6 +37,8 @@ The publishable MCP Bridge endpoint and workflow guide was checked against a loc
 
 The comparative demonstration evaluated an older LiteLLM/Bridge combination and successfully proved a Bridge-protected MCP route, not native LiteLLM MCP enforcement. Its transferable lessons and version limitations are recorded in [REFERENCE-IMPLEMENTATION-LEARNINGS.md](REFERENCE-IMPLEMENTATION-LEARNINGS.md).
 
+The Okta gateway article is treated as an architecture and customer-positioning source, not a product/API contract. Its last-mile identity and entitlement-ceiling implications are mapped into this repository in [IDENTITY-ARCHITECTURE-LEARNINGS.md](IDENTITY-ARCHITECTURE-LEARNINGS.md). Build claims still require public help/API evidence and tenant validation.
+
 ## Evidence classification
 
 | Label | Meaning |
@@ -45,3 +48,4 @@ The comparative demonstration evaluated an older LiteLLM/Bridge combination and 
 | Proposed integration | Design work that must be implemented and tested |
 | O4AA product capability | Described by the current internal O4AA technical reference |
 | Protocol specimen | Observed in Postman; may contain mistakes and is not production guidance |
+| Architecture/positioning | Official problem framing or design guidance; not a versioned product/API contract |

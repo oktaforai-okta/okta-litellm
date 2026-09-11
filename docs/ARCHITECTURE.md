@@ -6,6 +6,23 @@ Okta owns the governed identities, Resource Connection, scope policy, token issu
 
 Calling LiteLLM the primary PEP does not make the resource optional. A bearer token can bypass a gateway if the resource accepts it without validating issuer, audience, expiry, scopes, and actor lineage.
 
+## Last-mile identity invariant
+
+The design applies the architecture described in Okta's [gateway identity article](IDENTITY-ARCHITECTURE-LEARNINGS.md) without treating that positioning article as an API contract. LiteLLM keeps the gateway functions the customer values. Okta adds the governed identity and request-time decision that must survive to the protected resource.
+
+Every protected call must satisfy this intersection:
+
+```text
+effective authority
+  = agent may act for this human
+  ∩ agent may reach this resource
+  ∩ human is entitled to this resource action
+```
+
+The Org AS evaluates the agent/delegation side and issues or denies the short-lived, single-use ID-JAG. The resource Custom AS evaluates the human/resource side and issues or denies the short-lived scoped bearer. Swiss Army validates that final token on every protected request and applies tool/object authorization. LiteLLM may narrow the outcome with local admission and allowlists, but it cannot widen an Okta or resource denial.
+
+A user-only on-behalf-of token is insufficient for the first-class-agent claim because it can erase which governed agent acted. A LiteLLM virtual key is also insufficient as the last-mile resource credential because it does not by itself prove the holder's current Okta entitlement. The final MCP request must carry the tenant-issued resource token.
+
 ## MVP topology: two independent Claude traffic planes
 
 Claude Code does not send model inference through MCP. The demo must configure and observe both planes; proving the MCP route says nothing about model routing, and proving model routing says nothing about MCP authorization.

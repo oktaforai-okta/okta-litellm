@@ -18,6 +18,8 @@ Claude uses a LiteLLM key and a static or locally issued upstream credential. Li
 
 Do not say "there is no identity" or "there are no logs." The defensible statement is that there is no Okta-governed agent identity and no Okta-verifiable delegation chain.
 
+Also distinguish a configured gateway caller from a live resource entitlement. The LiteLLM key can identify its mapped user, team, route, or logical agent, but the protected resource does not receive an Okta request-time intersection of human entitlement, governed agent delegation, and agent-to-resource reachability.
+
 ### Act 2: Okta PDP + LiteLLM PEP
 
 1. The employee signs in through Okta.
@@ -30,6 +32,10 @@ Do not say "there is no identity" or "there are no logs." The defensible stateme
 8. The presenter opens an evidence view showing delegated human session, logical Claude route identity, target, scope, tool, outcome, and unambiguous correlated events.
 9. The presenter warms the cache, removes eligibility or deactivates the agent, and measures any already-authorized access until expiry without manual eviction.
 10. A forced fresh exchange is denied; LiteLLM makes no new protected upstream call.
+
+Run the allowed and ineligible personas through the same agent and resource so the entitlement ceiling is visible: changing only the human changes the Okta issuance result. If Swiss Army supports a safe object-level fixture, optionally show an allowed user's own synthetic object succeeding and another user's object failing. Label this as resource/FGA enforcement, not an OAuth scope trick.
+
+The presenter may explain the background exchange, but the allowed developer flow must not require copying tokens or understanding the protocol. Record initial login/consent steps and show that a warm authorized call returns to the normal Claude workflow.
 
 Optional supporting beat: show a machine-only credential as a legitimate workload identity that still lacks a delegated human session. Do not label it as weak identity or as a substitute for XAA.
 
@@ -51,6 +57,8 @@ Repeat the safe allow/deny/evidence/lifecycle story through the custom agent UI.
 | Allowed employee + wrong LiteLLM key | Gateway admission denied |
 | Direct caller + wrong audience/scope token | Swiss Army denies |
 | User A key + User B identity token | Denied; no identity substitution |
+| Human-only OBO result with no governed agent actor | Rejected or the first-class-agent claim fails |
+| Ineligible employee using the same agent/resource as eligible employee | Denied; gateway route does not lift the user's ceiling |
 | Copied Claude route key used by raw client | Denied, or explicitly demonstrates the logical-route attestation limit |
 | Valid resource bearer from untrusted host | Network/sender control denies |
 
@@ -72,6 +80,8 @@ Present one sanitized record containing:
 ## Presenter language
 
 Use: "Okta decides whether this delegated human session and customer-controlled logical agent identity can receive a resource-scoped credential. LiteLLM enforces that outcome at the MCP gateway, and the resource independently verifies it. Claude's model traffic is routed through a separate LiteLLM plane."
+
+Use: "The protected call is the intersection of what the agent may do for this human, what resource the agent may reach, and what the human is entitled to do there. LiteLLM keeps doing the routing and gateway work the customer values."
 
 Avoid: "LiteLLM now has full MCP Bridge parity," "Okta approved this exact tool argument," "Okta attested the Claude binary," "deactivation instantly revokes every cached bearer," "LiteLLM has no identity without Okta," or any claim that depends on a fabricated `act` field.
 

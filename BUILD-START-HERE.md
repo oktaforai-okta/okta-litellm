@@ -59,7 +59,7 @@ See [DEMO-EXPERIENCES.md](docs/DEMO-EXPERIENCES.md) for acceptance criteria.
 - LiteLLM Okta ID-JAG guide: <https://docs.litellm.ai/docs/mcp_id_jag>
 - Okta developer guides: <https://developer.okta.com/docs/guides/>
 - Okta API reference: <https://developer.okta.com/docs/reference/>
+- Okta gateway identity architecture: <https://www.okta.com/blog/ai/securing-ai-agents-identity-architecture/>
 - Repository-specific source index: [RESEARCH-SOURCES.md](docs/RESEARCH-SOURCES.md)
 
 Detailed public MCP Bridge implementation documentation is not generally available because the Bridge is proprietary. Use the publishable, source-verified operational contract in [MCP-BRIDGE-API.md](docs/MCP-BRIDGE-API.md), verify it against the deployed version, and involve the Bridge deployment owner when behavior differs.
-

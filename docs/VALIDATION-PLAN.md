@@ -29,6 +29,8 @@
 | I-11 | Claude and custom UI operate concurrently | Distinct WLPs/routes/credentials; no assertion, cache, response, or evidence crossover |
 | I-12 | Custom UI OAuth | Authorization code with PKCE succeeds for its own client; no Bridge admin or downstream token reaches the browser |
 | I-13 | Identity-like MCP arguments | Forged subject, agent, scope, approval, or correlation fields are ignored/rejected and never override transport/token identity |
+| I-14 | Human-only OBO token/profile | Rejected for the governed path, or the result is explicitly disqualified from the first-class-agent claim |
+| I-15 | Normal developer workflow | Allowed user completes standard login/consent without manually moving tokens; warm calls require no unexplained identity step |
 
 Do not hard-code an assumed WLP claim location before observing the tenant. Record the exact final-token profile, then make the resource validator enforce that profile.
 
@@ -58,6 +60,10 @@ Do not hard-code an assumed WLP claim location before observing the tenant. Reco
 | A-20 | Missing/wrong WLP, `kid`, issuer, audience, resource indicator, or JWKS | Fails closed before resource side effect; no shared/ephemeral credential fallback |
 | A-21 | Protected and unprotected tools share a client profile | Release gate fails; governed profile contains only the intended protected route |
 | A-22 | Unapproved model alias/provider requested | LiteLLM denies it; control and governed profiles do not use master keys or unrestricted wildcard routes |
+| A-23 | Same agent/resource, eligible versus ineligible human | Eligible call succeeds and ineligible call is denied; agent/gateway authority never lifts the human entitlement ceiling |
+| A-24 | LiteLLM admission key with no Okta resource token | Swiss Army denies it; the key cannot serve as the last-mile resource credential |
+| A-25 | More-privileged agent route with under-entitled human | Okta/resource denies capabilities above the human ceiling; no side effect |
+| A-26 | Optional own-object versus other-object fixture | Resource/FGA permits only the authorized object and records the object-level decision separately from OAuth scope |
 
 For the native MVP, Okta's authoritative decision is resource/scope token issuance. LiteLLM's local route/tool rules are a coarse enforcement ceiling. Do not claim dynamic per-tool Okta policy until the tool-to-scope/list-hook extension is implemented and separately tested.
 

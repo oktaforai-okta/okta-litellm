@@ -19,6 +19,8 @@ Do not claim complete MCP Bridge replacement. The first milestone proves one hum
 
 Both use cases must demonstrate Claude Code and a separately registered custom agent UI. The customer story centers Okta's workload-principal identity, owner/lifecycle, Resource Connection, scoped human-plus-agent token lineage, System Log evidence, and predictable deactivation of fresh authorization.
 
+The central security test is the [last-mile authorization intersection](docs/IDENTITY-ARCHITECTURE-LEARNINGS.md): the agent must be permitted to act for the human, the agent must be permitted to reach the resource, and the human's current resource entitlement must all be true. A LiteLLM virtual key or user-only login does not replace that intersection.
+
 ## Start a build
 
 - Read [BUILD-START-HERE.md](BUILD-START-HERE.md).
@@ -31,6 +33,7 @@ LiteLLM source is at [BerriAI/litellm](https://github.com/BerriAI/litellm); prod
 ## Read this first
 
 - [Architecture](docs/ARCHITECTURE.md)
+- [Identity architecture blog learnings](docs/IDENTITY-ARCHITECTURE-LEARNINGS.md)
 - [Build intake and handoff](BUILD-START-HERE.md)
 - [Demo story](docs/DEMO-STORY.md)
 - [Claude Code and custom UI experiences](docs/DEMO-EXPERIENCES.md)

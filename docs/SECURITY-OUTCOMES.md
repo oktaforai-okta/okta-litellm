@@ -13,6 +13,8 @@ The value claim is precise: O4AA adds an Okta-governed workload principal with o
 5. **Defense in depth:** LiteLLM admission, Okta issuance, and Swiss Army validation each fail independently.
 6. **Lifecycle control:** policy, connection, or agent changes prevent fresh authorization within a declared cache window.
 7. **Auditable outcome:** action, decision, identity, scope, and result are correlated without recording credentials.
+8. **Entitlement intersection:** the effective resource authority is no broader than the intersection of agent-for-human delegation, agent-to-resource reachability, and the human's current resource entitlement.
+9. **Last-mile enforcement:** the protected resource receives and validates the Okta resource token; a LiteLLM key or human-only login cannot substitute for it.
 
 ## Threats and mitigations
 
@@ -26,6 +28,8 @@ The value claim is precise: O4AA adds an Okta-governed workload principal with o
 | Broad cached token outlives policy change | Least-privilege scope, short TTL, cache invalidation test, accurate kill-switch language |
 | Token replay across resources | Audience/resource validation and short expiry; sender-constraining if the tenant/resource supports it |
 | Static credential fallback | No fallback branch; token failure ends the request |
+| User-only on-behalf-of collapses agent identity | Require and validate the tenant-issued human-plus-agent profile; deny or downgrade the customer claim when only the human survives |
+| Privileged agent lifts the human above their entitlement ceiling | Resource-AS policy and resource/FGA object checks constrain the human; test the same agent with eligible and ineligible users |
 | `tools/list` leaks metadata | Single safe MVP server and explicit local allowlist; build list-time PDP hook for strict target |
 | Sensitive logs | Structured allowlist schema; hash sensitive arguments; automated secret scans |
 | Stale/missing evidence | Durable controlled sink; minimal synchronous receipt before sensitive work |
@@ -58,6 +62,8 @@ The value claim is precise: O4AA adds an Okta-governed workload principal with o
 - A one-agent route is an MVP isolation technique, not a fleet architecture.
 - The WLP attests possession of its private key by the LiteLLM route boundary; it does not prove the vendor Claude executable made a request.
 - A retained OIDC assertion establishes whose delegated session/permissions were used. It does not prove fresh human presence or per-tool consent unless step-up/HITL is implemented.
+- The intermediate ID-JAG can be short-lived and single-use. Do not describe the final resource bearer as single-use unless the deployed tenant and resource prove that behavior.
+- Central identity policy does not remove resource enforcement. The MCP server must validate the token on every protected request and enforce scope plus object/argument rules.
 - If an authorized bearer can reach Swiss Army around LiteLLM, LiteLLM is one gateway PEP rather than a mandatory enforcement point.
 - Never create a custom `act` or similar claim solely to make the demo display a desired chain. Freeze and validate the claims actually issued by the approved Okta flow; use System Log evidence where the token profile intentionally differs.
 

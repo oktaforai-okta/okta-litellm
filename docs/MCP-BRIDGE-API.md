@@ -1087,6 +1087,8 @@ Before publication, scan the repository for private paths, repository URLs, sour
 - Okta developer guides: <https://developer.okta.com/docs/guides/>
 - Okta API reference: <https://developer.okta.com/docs/reference/>
 - OAuth 2.0 and OIDC overview: <https://developer.okta.com/docs/concepts/oauth-openid/>
+- Okta gateway identity architecture: <https://www.okta.com/blog/ai/securing-ai-agents-identity-architecture/>
+- Repository mapping of that article: [IDENTITY-ARCHITECTURE-LEARNINGS.md](IDENTITY-ARCHITECTURE-LEARNINGS.md)
 - Repository Okta access guide: [OKTA-API-AND-ACCESS.md](OKTA-API-AND-ACCESS.md)
 - Hybrid architecture: [ARCHITECTURE.md](ARCHITECTURE.md)
 - Implementation plan: [IMPLEMENTATION-PLAN.md](IMPLEMENTATION-PLAN.md)

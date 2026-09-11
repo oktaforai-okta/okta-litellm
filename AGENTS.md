@@ -1,6 +1,6 @@
 # Repository instructions for build agents
 
-This repository is a gated implementation plan. Read [BUILD-START-HERE.md](BUILD-START-HERE.md), [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md), [docs/IMPLEMENTATION-PLAN.md](docs/IMPLEMENTATION-PLAN.md), and [docs/REFERENCE-IMPLEMENTATION-LEARNINGS.md](docs/REFERENCE-IMPLEMENTATION-LEARNINGS.md) before creating runtime code or changing any environment.
+This repository is a gated implementation plan. Read [BUILD-START-HERE.md](BUILD-START-HERE.md), [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md), [docs/IDENTITY-ARCHITECTURE-LEARNINGS.md](docs/IDENTITY-ARCHITECTURE-LEARNINGS.md), [docs/IMPLEMENTATION-PLAN.md](docs/IMPLEMENTATION-PLAN.md), and [docs/REFERENCE-IMPLEMENTATION-LEARNINGS.md](docs/REFERENCE-IMPLEMENTATION-LEARNINGS.md) before creating runtime code or changing any environment.
 
 ## Mandatory intake
 

@@ -44,6 +44,7 @@ Deliverables:
 - Approve the evidence contract, data classification/retention schedule, mapping ledger, demo NFR targets, and named RACI in [NFR-AND-OPERATIONS.md](NFR-AND-OPERATIONS.md).
 - Require SBOM generation, dependency/container vulnerability scanning, license review, and provenance verification; define an approved fallback when an upstream image is not signed.
 - Write a capability ledger labelled `stable`, `prerelease`, `proposed integration`, or `O4AA product capability`.
+- Review [the last-mile identity architecture learnings](IDENTITY-ARCHITECTURE-LEARNINGS.md) and record how the chosen topology proves the human, governed agent, Resource Connection, and resource entitlement intersection.
 - Review [the comparative implementation learnings](REFERENCE-IMPLEMENTATION-LEARNINGS.md) and carry each applicable negative test into the execution brief without copying its private implementation.
 
 Gate 0A: the chosen LiteLLM artifact is reproducible and has all MVP features.
@@ -64,6 +65,8 @@ Gate 0C for the hybrid lane: the selected Bridge release/build is identified, it
 
 Build a disposable LiteLLM-to-Swiss-Army path with only synthetic, read-only tools. Use a least-privilege virtual key and approved model aliases, not the LiteLLM master key or an unrestricted wildcard model route. Capture what LiteLLM already knows: user/key/team/agent, route, tool, model, time, and result. Explicitly document which O4AA artifacts are absent.
 
+Show that the virtual key remains useful gateway identity and control, while also proving it is not accepted by Swiss Army as a live Okta human-plus-agent resource authorization. Do not manufacture a weak control with a shared master key.
+
 Gate: reviewers agree the comparison is factual and does not pretend LiteLLM lacks its own identity or audit features.
 
 ## Phase 2 — Provision the identity and policy plane
@@ -80,7 +83,7 @@ Create or verify:
 8. One active O4AA Resource Connection per agent to the Custom AS/resource, with independently verified mapping and lifecycle.
 9. System Log access for evidence collection.
 
-Gate: reproduce the human private-key XAA wire flow outside LiteLLM with sanitized diagnostics, using collection 09 only as a protocol oracle. Freeze the tenant-derived `audience` and `id_jag_resource` values, their exact LiteLLM field mapping, and the tenant-issued human/agent claim profile. Validate `iss`, `aud`, human subject, logical agent actor, scope, `jti`, lifetime, and denials for an unassigned user, unlinked app, inactive WLP/key/connection, wrong audience, and wrong resource indicator. Never fabricate or customize an `act` claim merely to satisfy the demo narrative.
+Gate: reproduce the human private-key XAA wire flow outside LiteLLM with sanitized diagnostics, using collection 09 only as a protocol oracle. Freeze the tenant-derived `audience` and `id_jag_resource` values, their exact LiteLLM field mapping, and the tenant-issued human/agent claim profile. Validate `iss`, `aud`, human subject, logical agent actor, scope, `jti`, lifetime, and denials for an unassigned user, unlinked app, inactive WLP/key/connection, wrong audience, and wrong resource indicator. Prove the same agent/resource request is allowed or denied according to the human's current ceiling and reject a human-only result that loses the governed agent. Never fabricate or customize an `act` claim merely to satisfy the demo narrative.
 
 ## Phase 3 — Deploy the pinned LiteLLM baseline
 
@@ -156,6 +159,9 @@ Run the positive and negative matrix in [VALIDATION-PLAN.md](VALIDATION-PLAN.md)
 - object-level authorization occurs inside the tool handler for any mutable tool;
 - a valid resource bearer cannot reach Swiss Army from an untrusted source, or the customer claim is downgraded from mandatory LiteLLM enforcement;
 - a copied User A credential, raw JSON-RPC client, and User A key plus User B ID token cannot inherit misleading User A/Claude attribution;
+- the same agent and resource produce the correct different results for eligible and ineligible humans, and a privileged route cannot lift an under-entitled human;
+- a human-only OBO result does not qualify as the governed human-plus-agent path;
+- a LiteLLM admission key presented without the Okta resource token is rejected by Swiss Army;
 - read and simulated-write tools on the same server prove which decisions belong to Okta scopes, LiteLLM's local ceiling, and the resource;
 - inbound `Authorization`, identity, forwarding, host, and correlation header collisions cannot override trusted values.
 - identity-like fields supplied in MCP tool arguments have no effect on subject, actor, scope, approval, or correlation;
