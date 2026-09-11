@@ -1,0 +1,30 @@
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.jwk
+
+# Protocol artifacts that commonly contain credentials
+*.postman_environment*.json
+*.postman_collection.json
+*.har
+*.pcap
+captures/
+
+# Runtime state
+__pycache__/
+.pytest_cache/
+.venv/
+node_modules/
+dist/
+build/
+*.log
+
+# Editor and operating-system state
+.DS_Store
+.idea/
+.vscode/
