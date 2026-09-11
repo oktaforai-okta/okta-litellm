@@ -16,7 +16,7 @@
 
 | ID | Test | Pass condition |
 |---|---|---|
-| I-01 | Decode final resource token safely | Expected `iss`, `aud`, human `sub`, Claude WLP `act.sub`, scope, `jti`, `iat`, and `exp` |
+| I-01 | Decode final resource token safely | Expected `iss`, `aud`, human subject, intended logical-agent actor in the frozen tenant-issued claim profile, scope, `jti`, `iat`, and `exp`; no fabricated claim |
 | I-02 | Wrong assertion issuer/subject | Okta denies; no resource request |
 | I-03 | Caller changes agent header | Actor is unchanged or request is denied |
 | I-04 | Shared route attempted by a second agent | Denied or isolated; never attributed to Claude silently |
@@ -28,6 +28,7 @@
 | I-10 | OIDC app linkage/assignment and WLP/key activation | Missing/unlinked/inactive state denies fresh issuance |
 | I-11 | Claude and custom UI operate concurrently | Distinct WLPs/routes/credentials; no assertion, cache, response, or evidence crossover |
 | I-12 | Custom UI OAuth | Authorization code with PKCE succeeds for its own client; no Bridge admin or downstream token reaches the browser |
+| I-13 | Identity-like MCP arguments | Forged subject, agent, scope, approval, or correlation fields are ignored/rejected and never override transport/token identity |
 
 Do not hard-code an assumed WLP claim location before observing the tenant. Record the exact final-token profile, then make the resource validator enforce that profile.
 
@@ -53,6 +54,10 @@ Do not hard-code an assumed WLP claim location before observing the tenant. Reco
 | A-16 | Direct MCP-resource configuration | Blocked in demo profile and recorded as bypass test |
 | A-17 | Raw inbound auth/identity/forwarding/host headers | Cannot overwrite trusted egress token, subject, agent, destination, or correlation ID |
 | A-18 | Tool-loop/rate-limit abuse | Per-user/route budgets stop the loop without identity crossover or partial mutable side effects |
+| A-19 | Mixed allowed/disallowed scope request | Exact requested set is recorded; Okta denies or downscopes only according to the verified policy contract |
+| A-20 | Missing/wrong WLP, `kid`, issuer, audience, resource indicator, or JWKS | Fails closed before resource side effect; no shared/ephemeral credential fallback |
+| A-21 | Protected and unprotected tools share a client profile | Release gate fails; governed profile contains only the intended protected route |
+| A-22 | Unapproved model alias/provider requested | LiteLLM denies it; control and governed profiles do not use master keys or unrestricted wildcard routes |
 
 For the native MVP, Okta's authoritative decision is resource/scope token issuance. LiteLLM's local route/tool rules are a coarse enforcement ceiling. Do not claim dynamic per-tool Okta policy until the tool-to-scope/list-hook extension is implemented and separately tested.
 
@@ -68,6 +73,8 @@ For the native MVP, Okta's authoritative decision is resource/scope token issuan
 | C-06 | Concurrent collision test | Identical, delayed, duplicated, and reordered calls reconstruct without an ambiguous or incorrect join |
 | C-07 | “Why” evidence | Sanitized task/reason ID, session capture time, key owner, and policy/config revision are retained without prompts or secrets |
 | C-08 | Evidence completeness/retention | Required fields, maximum lag, deletion date, access audit, and missing-event behavior pass |
+| C-09 | Invalid/unverified JWT presented | No successful identity/custody classification; diagnostic data is clearly untrusted and excluded from evidence |
+| C-10 | Claim minimization | Evidence contains only approved claim fields, not the raw token or whole claims object |
 
 LiteLLM's spend/action logs are operational evidence; its configuration audit table is not by itself a tamper-evident decision ledger. The evidence design must add a sanitized action receipt.
 
@@ -101,6 +108,9 @@ LiteLLM's spend/action logs are operational evidence; its configuration audit ta
 | Model provider unavailable | Model call fails on its own plane; no MCP credential fallback or authorization weakening |
 | DNS rebinding/SSRF target supplied as MCP URL | Destination allowlist and egress controls reject it |
 | Prompt/tool metadata injection | Untrusted descriptions/results cannot change route, credentials, policy, or approval state |
+| Downstream MCP session becomes stale after resource restart | Invalidate session and retry at most once; preserve exact identity, credential, scopes, resource, and topology |
+| Custody callback/viewer misclassifies a known fixture | Authoritative Okta/gateway/resource events win; projected record is rejected and alerted |
+| Resource returns an application-level denial | Gateway/evidence records denial, not successful tool execution; no side effect exists |
 
 ## Non-functional requirements
 

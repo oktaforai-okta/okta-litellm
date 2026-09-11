@@ -22,6 +22,7 @@ Reviewed on 2026-09-11.
 - O4AA technical reference: token flows, agent identity/registry, connections and credentials, A2A, management API, product capabilities, and agentic-enterprise blueprint
 - MCP Bridge technical reference: setup/access, admin API, 0.16 runtime authorization and tools, release/patch notes, and troubleshooting
 - Local Postman collection matrix supplied for planning (read-only; collections and environments are not reproduced)
+- Private comparative LiteLLM/O4AA demonstration repository supplied by a collaborator (architecture and operational lessons only; source, tenant data, credentials, and private link are not reproduced)
 
 ## Source snapshots inspected
 
@@ -32,6 +33,8 @@ Reviewed on 2026-09-11.
 The development snapshot was used to identify likely future improvements and integration seams only. Customer-facing recommendations are based on stable behavior unless explicitly labeled otherwise.
 
 The publishable MCP Bridge endpoint and workflow guide was checked against a local proprietary `0.16.6` source snapshot on 2026-09-11. No Bridge source, private repository link, internal schema, or implementation excerpt is included. Stable public detailed Bridge API documentation was not available; deployed-version behavior must be confirmed with the Bridge owner.
+
+The comparative demonstration evaluated an older LiteLLM/Bridge combination and successfully proved a Bridge-protected MCP route, not native LiteLLM MCP enforcement. Its transferable lessons and version limitations are recorded in [REFERENCE-IMPLEMENTATION-LEARNINGS.md](REFERENCE-IMPLEMENTATION-LEARNINGS.md).
 
 ## Evidence classification
 

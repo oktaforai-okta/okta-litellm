@@ -44,6 +44,7 @@ Deliverables:
 - Approve the evidence contract, data classification/retention schedule, mapping ledger, demo NFR targets, and named RACI in [NFR-AND-OPERATIONS.md](NFR-AND-OPERATIONS.md).
 - Require SBOM generation, dependency/container vulnerability scanning, license review, and provenance verification; define an approved fallback when an upstream image is not signed.
 - Write a capability ledger labelled `stable`, `prerelease`, `proposed integration`, or `O4AA product capability`.
+- Review [the comparative implementation learnings](REFERENCE-IMPLEMENTATION-LEARNINGS.md) and carry each applicable negative test into the execution brief without copying its private implementation.
 
 Gate 0A: the chosen LiteLLM artifact is reproducible and has all MVP features.
 
@@ -61,7 +62,7 @@ Gate 0C for the hybrid lane: the selected Bridge release/build is identified, it
 
 ## Phase 1 — Establish the no-Okta control
 
-Build a disposable LiteLLM-to-Swiss-Army path with only synthetic, read-only tools. Capture what LiteLLM already knows: user/key/team/agent, route, tool, model, time, and result. Explicitly document which O4AA artifacts are absent.
+Build a disposable LiteLLM-to-Swiss-Army path with only synthetic, read-only tools. Use a least-privilege virtual key and approved model aliases, not the LiteLLM master key or an unrestricted wildcard model route. Capture what LiteLLM already knows: user/key/team/agent, route, tool, model, time, and result. Explicitly document which O4AA artifacts are absent.
 
 Gate: reviewers agree the comparison is factual and does not pretend LiteLLM lacks its own identity or audit features.
 
@@ -79,7 +80,7 @@ Create or verify:
 8. One active O4AA Resource Connection per agent to the Custom AS/resource, with independently verified mapping and lifecycle.
 9. System Log access for evidence collection.
 
-Gate: reproduce the human private-key XAA wire flow outside LiteLLM with sanitized diagnostics, using collection 09 only as a protocol oracle. Freeze the tenant-derived `audience` and `id_jag_resource` values and their exact LiteLLM field mapping. Validate `iss`, `aud`, `sub`, `act.sub`, scope, `jti`, lifetime, and denials for an unassigned user, unlinked app, inactive WLP/key/connection, wrong audience, and wrong resource indicator.
+Gate: reproduce the human private-key XAA wire flow outside LiteLLM with sanitized diagnostics, using collection 09 only as a protocol oracle. Freeze the tenant-derived `audience` and `id_jag_resource` values, their exact LiteLLM field mapping, and the tenant-issued human/agent claim profile. Validate `iss`, `aud`, human subject, logical agent actor, scope, `jti`, lifetime, and denials for an unassigned user, unlinked app, inactive WLP/key/connection, wrong audience, and wrong resource indicator. Never fabricate or customize an `act` claim merely to satisfy the demo narrative.
 
 ## Phase 3 — Deploy the pinned LiteLLM baseline
 
@@ -137,6 +138,7 @@ Gate 3H: model traffic demonstrably uses LiteLLM; MCP traffic demonstrably uses 
 9. Register the custom UI as a separate browser client using authorization code with PKCE and a backend-for-frontend where server-held credentials/exchanges are needed.
 10. Bind the custom UI to its own LiteLLM user/client, dedicated MCP route, WLP signing credential, and evidence identity; repeat the list/call, restart, revocation, bypass, and cross-user tests.
 11. Run Claude and the custom UI concurrently and prove there is no assertion, admission key, model/MCP credential, token cache, response, or evidence crossover.
+12. Use separate client/project profiles for the intentionally unprotected control and governed path; never expose both similarly named MCP tools to the model in one profile.
 
 Gate: Claude and the custom UI each list only the intended synthetic tools and invoke them through their expected human-plus-logical-agent chain. Independent telemetry proves both clients' model inference and MCP traffic traverse LiteLLM, while direct-provider/direct-MCP configurations and cross-client identity reuse fail.
 
@@ -156,6 +158,11 @@ Run the positive and negative matrix in [VALIDATION-PLAN.md](VALIDATION-PLAN.md)
 - a copied User A credential, raw JSON-RPC client, and User A key plus User B ID token cannot inherit misleading User A/Claude attribution;
 - read and simulated-write tools on the same server prove which decisions belong to Okta scopes, LiteLLM's local ceiling, and the resource;
 - inbound `Authorization`, identity, forwarding, host, and correlation header collisions cannot override trusted values.
+- identity-like fields supplied in MCP tool arguments have no effect on subject, actor, scope, approval, or correlation;
+- the complete scope set is tested; requesting an allowed and disallowed scope together never produces an undocumented partial grant;
+- missing/wrong WLP, active `kid`, issuer, audience, resource indicator, or JWKS origin fails before a protected side effect;
+- a stale downstream MCP session is invalidated and retried at most once without changing user, agent, credential, resource, or topology;
+- invalid or unverified JWT data cannot populate a successful identity/custody record, and resource denials cannot be encoded as successful tool outcomes.
 
 Gate: all required controls pass, including raw JSON-RPC attempts that bypass the Claude UI.
 

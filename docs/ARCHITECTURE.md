@@ -149,6 +149,7 @@ Swiss Army ingress from the demo environment must be private or source-allowlist
 - Set `require_key_mcp_access_defined` and configure explicit server/tool grants.
 - Use short resource-token TTLs and document cache behavior.
 - Block direct model-provider and direct MCP endpoints from the Claude demo profile; test both bypasses.
+- Keep the no-Okta control and governed MCP routes in separate client/project profiles so the model cannot select an identically named unprotected tool.
 - Reject or overwrite inbound headers that could collide with egress `Authorization`, identity, or correlation headers.
 
 ## Configuration reconciliation

@@ -4,13 +4,15 @@
 
 The same Claude Code task is run twice against the Swiss Army MCP. The resource is deterministic and should use synthetic data only.
 
+Use separate Claude project profiles for the control and governed routes. Never expose both versions of a similarly named tool in one model context; otherwise a plausible answer may come from the wrong security path.
+
 ### Act 1: LiteLLM without O4AA
 
 Claude uses a LiteLLM key and a static or locally issued upstream credential. LiteLLM can still identify its own key, team, user, or local agent and can produce useful logs. The missing controls are specifically Okta-governed controls:
 
 - no O4AA workload principal with owner and lifecycle;
 - no Okta Resource Connection governing the target;
-- no Okta-issued artifact binding human `sub` to agent `act.sub`;
+- no Okta-issued artifact/evidence binding the human subject to the intended logical agent actor;
 - no Okta policy/token-grant event to explain the resource authorization;
 - no Okta agent deactivation control over fresh work.
 
@@ -28,6 +30,8 @@ Do not say "there is no identity" or "there are no logs." The defensible stateme
 8. The presenter opens an evidence view showing delegated human session, logical Claude route identity, target, scope, tool, outcome, and unambiguous correlated events.
 9. The presenter warms the cache, removes eligibility or deactivates the agent, and measures any already-authorized access until expiry without manual eviction.
 10. A forced fresh exchange is denied; LiteLLM makes no new protected upstream call.
+
+Optional supporting beat: show a machine-only credential as a legitimate workload identity that still lacks a delegated human session. Do not label it as weak identity or as a substitute for XAA.
 
 ### Act 3: Why the hybrid remains
 
@@ -69,7 +73,7 @@ Present one sanitized record containing:
 
 Use: "Okta decides whether this delegated human session and customer-controlled logical agent identity can receive a resource-scoped credential. LiteLLM enforces that outcome at the MCP gateway, and the resource independently verifies it. Claude's model traffic is routed through a separate LiteLLM plane."
 
-Avoid: "LiteLLM now has full MCP Bridge parity," "Okta approved this exact tool argument," "Okta attested the Claude binary," "deactivation instantly revokes every cached bearer," or "LiteLLM has no identity without Okta."
+Avoid: "LiteLLM now has full MCP Bridge parity," "Okta approved this exact tool argument," "Okta attested the Claude binary," "deactivation instantly revokes every cached bearer," "LiteLLM has no identity without Okta," or any claim that depends on a fabricated `act` field.
 
 ## Optional secondary demonstration
 
@@ -78,4 +82,4 @@ After the primary gates pass, add either:
 - a simulated write tool with a separate scope and object-level authorization; or
 - GitHub through the hybrid MCP Bridge path to explain why XAA and STS are different controls.
 
-Do not make GitHub the first proof: it hides the Okta `act` chain behind provider OAuth and introduces consent, connector, and cloud-resource variables unrelated to the core architecture question.
+Do not make GitHub the first proof: provider OAuth hides the internal XAA token profile from the final SaaS request and introduces consent, connector, and cloud-resource variables unrelated to the core architecture question.

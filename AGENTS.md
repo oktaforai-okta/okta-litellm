@@ -1,6 +1,6 @@
 # Repository instructions for build agents
 
-This repository is a gated implementation plan. Read [BUILD-START-HERE.md](BUILD-START-HERE.md), [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md), and [docs/IMPLEMENTATION-PLAN.md](docs/IMPLEMENTATION-PLAN.md) before creating runtime code or changing any environment.
+This repository is a gated implementation plan. Read [BUILD-START-HERE.md](BUILD-START-HERE.md), [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md), [docs/IMPLEMENTATION-PLAN.md](docs/IMPLEMENTATION-PLAN.md), and [docs/REFERENCE-IMPLEMENTATION-LEARNINGS.md](docs/REFERENCE-IMPLEMENTATION-LEARNINGS.md) before creating runtime code or changing any environment.
 
 ## Mandatory intake
 
@@ -37,4 +37,3 @@ If an answer is unknown, pause the affected phase at its documented gate. Do not
 - Use synthetic users and data in isolated non-production environments.
 - Keep Claude Code and custom agent UI model/MCP credentials, identities, telemetry, and test evidence separate.
 - Do not claim MCP Bridge parity, per-tool Okta decisions, instantaneous bearer revocation, or Claude binary attestation unless the corresponding validation gate passes.
-

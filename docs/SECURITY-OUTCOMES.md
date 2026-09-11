@@ -42,6 +42,12 @@ The value claim is precise: O4AA adds an Okta-governed workload principal with o
 | Tool-loop, budget, or retry abuse | User/agent/route rate limits, tool-call budgets, idempotency, bounded retries, and loop detection |
 | Model-provider data egress | Classify prompts/tool data, minimize transmission, approve provider/region/retention, and redact secrets before inference |
 | Resource Connection/LiteLLM drift | Reviewed mapping ledger, automated comparison where possible, alerting, and fail-closed unknown mappings |
+| Model selects an unprotected duplicate tool | Separate governed/control client profiles; verify actual gateway, namespaced tool, resource, and side-effect ID |
+| Caller supplies identity as a tool argument | Derive identity/scope only from validated transport/token context; ignore or reject identity-like arguments |
+| Missing WLP/key silently uses shared identity | Require exact WLP and active registered `kid`; prohibit ephemeral/shared fallback; startup and negative tests |
+| Unverified JWT populates a convincing custody view | Never use unverified claims for evidence/authorization; record verification status and project only allowlisted claims |
+| Denial encoded as successful MCP content | Machine-readable denial contract, terminal denial audit state, and resource-side no-side-effect verification |
+| Mutable username drives object authorization | Key business authorization on immutable `iss` + `sub` or a controlled server-side mapping |
 
 ## Claim limitations
 
@@ -53,6 +59,7 @@ The value claim is precise: O4AA adds an Okta-governed workload principal with o
 - The WLP attests possession of its private key by the LiteLLM route boundary; it does not prove the vendor Claude executable made a request.
 - A retained OIDC assertion establishes whose delegated session/permissions were used. It does not prove fresh human presence or per-tool consent unless step-up/HITL is implemented.
 - If an authorized bearer can reach Swiss Army around LiteLLM, LiteLLM is one gateway PEP rather than a mandatory enforcement point.
+- Never create a custom `act` or similar claim solely to make the demo display a desired chain. Freeze and validate the claims actually issued by the approved Okta flow; use System Log evidence where the token profile intentionally differs.
 
 ## Evidence schema
 

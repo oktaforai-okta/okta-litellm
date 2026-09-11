@@ -41,3 +41,7 @@ The plan is ready to execute only after named owners accept the targets. It is n
 7. The data/privacy, recovery, or operational controls are unacceptable for the customer's deployment.
 
 Passing the narrow demo does not prove multi-agent credential selection, per-tool dynamic Okta policy, GitHub/Atlassian STS, OPA vaulted secrets, automatic Resource Connection synchronization, or full MCP Bridge replacement.
+
+## Comparative implementation follow-up
+
+A later review of a collaborator's private LiteLLM/O4AA demonstration did not change the recommendation. It added concrete gates for tenant-issued actor-claim discovery without fabricated `act`, transport-bound identity, protected/unprotected client-profile isolation, complete scope-set behavior, active JWK `kid` validation, stale MCP-session recovery, callback/viewer reconciliation, and proof that governed model traffic still uses LiteLLM. See [REFERENCE-IMPLEMENTATION-LEARNINGS.md](REFERENCE-IMPLEMENTATION-LEARNINGS.md).

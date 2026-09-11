@@ -43,6 +43,7 @@ LiteLLM source is at [BerriAI/litellm](https://github.com/BerriAI/litellm); prod
 - [Okta API and access guide](docs/OKTA-API-AND-ACCESS.md)
 - [MCP Bridge API and access guide](docs/MCP-BRIDGE-API.md)
 - [Gap audit](docs/GAP-AUDIT.md)
+- [Comparative implementation learnings](docs/REFERENCE-IMPLEMENTATION-LEARNINGS.md)
 - [Open questions](docs/OPEN-QUESTIONS.md)
 - [Decision log](docs/adr/0001-litellm-first-pep.md)
 
